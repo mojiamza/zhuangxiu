@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026现代简约风·100㎡精装设计报告 V4</title>
+<script src="https://dl.aipyaipy.com/downloads/js/echarts-5.5.0.js"></script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&display=swap');
+:root {
+    --primary: #1a1a2e;
+    --accent: #e94560;
+    --accent2: #0f3460;
+    --bg: #f0f2f5;
+    --card: #ffffff;
+    --text: #2d3436;
+    --text-light: #636e72;
+    --shadow: 0 8px 32px rgba(0,0,0,0.08);
+    --radius: 16px;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    padding-bottom: 60px;
+}
+header {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--accent2) 50%, var(--accent) 100%);
+    color: white;
+    padding: 60px 20px 40px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+header::before {
+    content: '';
+    position: absolute;
+    top: -50%; left: -50%;
+    width: 200%; height: 200%;
+    background: radial-gradient(circle at 30% 50%, rgba(255,255,255,0.08) 0%, transparent 60%);
+    animation: float 15s infinite alternate;
+}
+@keyframes float { 0% { transform: translate(0,0) rotate(0deg); } 100% { transform: translate(30px,-30px) rotate(5deg); } }
+header h1 { font-size: 2.8rem; font-weight: 900; letter-spacing: 2px; position: relative; z-index: 1; }
+header .subtitle { font-size: 1.1rem; opacity: 0.9; margin-top: 10px; position: relative; z-index: 1; }
+.container { max-width: 1200px; margin: -30px auto 0; padding: 0 20px; position: relative; z-index: 2; }
+.section {
+    background: var(--card);
+    border-radius: var(--radius);
+    padding: 30px;
+    margin-bottom: 25px;
+    box-shadow: var(--shadow);
+    transition: transform 0.3s ease;
+}
+.section:hover { transform: translateY(-3px); }
+h2 {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 20px;
+    padding-left: 15px;
+    border-left: 5px solid var(--accent);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.chart-container { width: 100%; height: 420px; }
+.room-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(360px, 1fr)); gap: 20px; }
+.room-card {
+    background: var(--card);
+    border: 1px solid #eee;
+    border-radius: var(--radius);
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+.room-card:hover { transform: translateY(-5px); box-shadow: 0 12px 40px rgba(0,0,0,0.12); }
+.room-card img { width: 100%; height: 200px; object-fit: cover; display: block; }
+.room-card .card-body { padding: 18px; }
+.room-card .room-name { font-size: 1.2rem; font-weight: 700; color: var(--primary); }
+.room-card .room-budget { color: var(--accent); font-weight: 500; margin-top: 5px; }
+.project-list { display: none; padding: 0 18px 18px; }
+.project-list.show { display: block; }
+.project-item {
+    background: #f8f9fa;
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    transition: all 0.2s;
+    border-left: 3px solid var(--accent);
+}
+.project-item:hover { background: #eef1f5; }
+.project-item .project-name { font-weight: 600; color: var(--accent2); }
+.project-detail {
+    display: none;
+    margin-top: 12px;
+    padding: 15px;
+    background: white;
+    border-radius: 8px;
+    border: 1px solid #e0e0e0;
+}
+.project-detail.show { display: block; }
+.detail-label {
+    font-weight: 600;
+    color: var(--accent2);
+    margin-top: 12px;
+    margin-bottom: 6px;
+    font-size: 0.95rem;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+.detail-label:first-child { margin-top: 0; }
+.detail-content {
+    font-size: 0.9rem;
+    color: var(--text);
+    line-height: 1.8;
+    white-space: pre-line;
+    padding-left: 5px;
+}
+.tips-box {
+    background: #fff3e0;
+    border-left: 4px solid var(--accent);
+    padding: 12px;
+    border-radius: 6px;
+    margin-top: 8px;
+}
+footer {
+    position: fixed;
+    bottom: 0; left: 0; width: 100%;
+    background: rgba(255,255,255,0.95);
+    backdrop-filter: blur(10px);
+    padding: 12px;
+    text-align: center;
+    font-size: 0.85rem;
+    color: var(--text-light);
+    border-top: 1px solid #eee;
+    z-index: 100;
+}
+footer a { color: var(--accent); text-decoration: none; }
+@media (max-width: 768px) {
+    header h1 { font-size: 1.8rem; }
+    .room-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+<header>
+    <h1>🏡 2026现代简约风·100㎡精装设计报告 V4</h1>
+    <p class="subtitle">三室两厅两卫 | 预算精控 | 30年实战避坑指南 | AiPy 章鱼哥设计团队出品</p>
+</header>
+<div class="container">
+    <div class="section">
+        <h2>📊 全屋预算分布</h2>
+        <div id="budgetChart" class="chart-container"></div>
+        <div style="text-align:center;margin-top:15px;padding:12px;background:#fff3e0;border-radius:8px;">
+            💡 <strong>总预算预估：约 13.20 万元</strong>（硬装+定制+主材+基础家电）
+        </div>
+    </div>
+    <div class="section">
+        <h2>🖼️ 全屋空间设计（点击房间展开项目，点击项目查看详情）</h2>
+        <div class="room-grid">
+
+            <div class="room-card" onclick="toggleProjects('玄关')">
+                <img src="images/room_1.png" alt="玄关">
+                <div class="card-body">
+                    <div class="room-name">玄关</div>
+                    <div class="room-budget">💰 预算：0.7万元</div>
+                </div>
+                <div class="project-list" id="projects-玄关">
+
+                    <div class="project-item" onclick="event.stopPropagation();toggleDetail('玄关-五分段入户鞋柜+入户门包口+工具收纳')">
+                        <div class="project-name">📌 五分段入户鞋柜+入户门包口+工具收纳</div>
+                        <div class="project-detail" id="detail-玄关-五分段入户鞋柜+入户门包口+工具收纳">
+                            <div class="detail-label">📐 设计内容</div>
+                            <div class="detail-content">1. 顶柜：换季收纳区，高度约400mm。
+2. 中镂空：随手置物区，高度350mm，预留灯带。
+3. 挂衣区：外套包包区，高度1200mm，深度≥550mm。
+4. 下柜：常穿鞋区，高度900mm，层板可调节。
+5. 底部悬空：拖鞋/扫地机区，高度150-180mm，预留插座。
+6. 侧边收纳：预留家用维修工具抽屉或洞洞板。
+7. 入户门：建议包口过渡，与墙面收边条衔接。</div>
+                            <div class="detail-label">🧱 材料与工艺</div>
+                            <div class="detail-content">1. 柜体：ENF级实木颗粒板（防潮稳定）。
+2. 柜门：PET肤感饰面颗粒板（抗指纹、易清洁）。
+3. 抽屉轨道：托底轨（隐藏式，承重强、全拉出、静音）。
+4. 门套：实木复合或铝合金包口，颜色与踢脚线呼应。
+5. 五金：百隆/悍高阻尼铰链，反弹器免拉手设计。</div>
+                            <div class="detail-label">🛋️ 家具/家电搭配</div>
+                            <div class="detail-content">1. 照明：柜内预埋4000K暖色LED灯带（人体感应）。
+2. 插座：底部预留10A插座（烘鞋器/扫地机器人）。
+3. 智能：墙面安装智能门锁及可视对讲。
+4. 工具：隐藏式工具抽屉（钳子/螺丝刀/卷尺）。</div>
+                            <div class="detail-label">💰 预算：0.7万元</div>
+                            <div class="detail-label">⚠️ 避坑指南</div>
+                            <div class="tips-box detail-content">1. 颗粒板选择：柜体认准ENF级防潮颗粒板，柜门用PET肤感板，环保且耐刮。鞋盒可放顶柜或底部悬空区，层板做活动排孔。
+2. 抽屉轨道：务必选托底轨（隐藏式），比三节轨承重更好、抽拉更顺滑、全拉出无死角。
+3. 入户门包口：建议包实木复合或铝合金门套，与墙面过渡用收边条，柜门开启需预留≥5mm缝隙防摩擦。
+4. 工具收纳：在鞋柜侧边或底部悬空处设隐藏工具抽屉，或墙面装洞洞板，维修工具集中收纳不占地。
+5. 灯带预埋：务必在木工阶段提前开槽预埋变压器，切勿后期走明线。
+6. 底部悬空：高度留足150-180mm，方便日常踢入拖鞋，扫地机器人能自由进出；此处一定要预留插座。
+7. 五金不能省：鞋柜使用频率极高，铰链和滑轨必须选百隆、海蒂诗或悍高等一线品牌带阻尼缓冲。
+8. 环保等级：柜体板材必须认准新国标ENF级（甲醛释放量≤0.025mg/m³），安装后务必通风。</div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="room-card" onclick="toggleProjects('客厅')">
+                <img src="images/room_2.png" alt="客厅">
+                <div class="card-body">
+                    <div class="room-name">客厅</div>
+                    <div class="room-budget">💰 预算：2.6万元</div>
+                </div>
+                <div class="project-list" id="projects-客厅">
+
+                    <div class="project-item" onclick="event.stopPropagation();toggleDetail('客厅-无主灯/柜机空调/踢脚线/饮水机/美缝')">
+                        <div class="project-name">📌 无主灯/柜机空调/踢脚线/饮水机/美缝</div>
+                        <div class="project-detail" id="detail-客厅-无主灯/柜机空调/踢脚线/饮水机/美缝">
+                            <div class="detail-label">📐 设计内容</div>
+                            <div class="detail-content">1. 灯光布局：极简几何吸顶灯或分子吊灯（若不用无主灯）。
+2. 背景墙：36°洗墙射灯洗亮材质，沙发上方防眩射灯或隐藏灯带。
+3. 踢脚线：40mm极简铝合金，显层高不积灰。
+4. 吊顶：全屋平顶+边吊（下吊150mm），嵌入磁吸轨道灯+防眩射灯。
+5. 电视墙：局部胡桃木墙板+大面积浅灰乳胶漆，搭配落地式电视柜。</div>
+                            <div class="detail-label">🧱 材料与工艺</div>
+                            <div class="detail-content">1. 吊顶：轻钢龙骨+双层9.5mm防裂石膏板，接缝V型槽+防裂网带。
+2. 踢脚线：6063-T5铝合金哑光黑/深灰，表面阳极氧化处理。
+3. 美缝：环氧彩砂或聚脲（耐黄变、防水防霉）。
+4. 电视墙板：12mm实木多层板贴天然胡桃木皮，开放漆保留木纹。</div>
+                            <div class="detail-label">🛋️ 家具/家电搭配</div>
+                            <div class="detail-content">1. 空调：3匹一级能效变频圆柱柜机（占地小/出风柔）。
+2. 饮水：管线机或即热式台式饮水机。
+3. 沙发：2.8m直排头层牛皮沙发（大象灰/暖咖色）。
+4. 茶几：圆形岩板茶几（防磕碰）。
+5. 电视：75/85寸Mini-LED电视。
+6. 电视柜：落地式（长2.4m，底部100mm金属支架）。</div>
+                            <div class="detail-label">💰 预算：2.6万元</div>
+                            <div class="detail-label">⚠️ 避坑指南</div>
+                            <div class="tips-box detail-content">1. 灯光选择：现代简约推荐无主灯，若用主灯选极简吸顶灯。背景墙用36°洗墙射灯，沙发上方用防眩射灯。
+2. 柜机空调：选圆柱款省空间，出风口朝过道形成对流，预留16A独立插座，铜管抽真空≥15分钟。
+3. 踢脚线：推荐40mm显层高，配色与门套同色或哑光黑/深灰。必须在墙面刷完漆后安装，转角用专用连接件。
+4. 饮水机：预埋PE管装管线机（需净水器配套），或餐边柜放即热式台式饮水机。
+5. 美缝剂：选环氧彩砂（哑光质感）或聚脲（耐黄变），施工前清缝彻底，阴干后打胶。
+6. 电视墙插座：所有插座必须全部预埋在落地电视柜内部，墙面一根线都不能露！建议预埋50mm PVC管穿线。
+7. 电视尺寸：视距3.5米以内选75寸足够，3.5-4米选85寸。不要盲目追求100寸。
+8. 沙发材质：预算充足直接上头层牛皮（透气耐用10年以上），预算有限选高密度海绵+科技布。</div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="room-card" onclick="toggleProjects('阳台')">
+                <img src="images/room_3.png" alt="阳台">
+                <div class="card-body">
+                    <div class="room-name">阳台</div>
+                    <div class="room-budget">💰 预算：1.6万元</div>
+                </div>
+                <div class="project-list" id="projects-阳台">
+
+                    <div class="project-item" onclick="event.stopPropagation();toggleDetail('阳台-包口/耐晒墙板/窗帘盒/落地窗/晾衣架')">
+                        <div class="project-name">📌 包口/耐晒墙板/窗帘盒/落地窗/晾衣架</div>
+                        <div class="project-detail" id="detail-阳台-包口/耐晒墙板/窗帘盒/落地窗/晾衣架">
+                            <div class="detail-label">📐 设计内容</div>
+                            <div class="detail-content">1. 门窗包口：入户门/窗建议包口，防潮耐晒。
+2. 墙板通铺：浅灰/米白耐晒色，与客厅视觉延伸。
+3. 窗帘：预留窗帘盒+幻影纱（透光不透人）。
+4. 落地窗：侧留检修通道，外侧空调机位百叶通风。
+5. 洗衣区：定制一体化洗衣机柜，叠放洗烘套装，搭配台下盆与抽拉龙头。</div>
+                            <div class="detail-label">🧱 材料与工艺</div>
+                            <div class="detail-content">1. 墙板：SPC石塑或竹木纤维（耐晒防潮/卡扣安装/无需美缝）。
+2. 窗帘盒：木工板打底，隐藏轨道。
+3. 晾衣架：隐形嵌入式电动款（不压层高/带烘干照明）。
+4. 柜体：全铝合金防水材质（永不发霉），台面20mm厚石英石。
+5. 地漏：T型防臭洗衣机专用地漏。</div>
+                            <div class="detail-label">🛋️ 家具/家电搭配</div>
+                            <div class="detail-content">1. 洗烘：10kg热泵洗烘套装（叠放，官方连接支架）。
+2. 晾衣：智能电动晾衣架（带烘干/照明）。
+3. 休闲：藤编/亚克力休闲单椅+小边几。
+4. 收纳：墙面洞洞板收纳清洁工具。</div>
+                            <div class="detail-label">💰 预算：1.6万元</div>
+                            <div class="detail-label">⚠️ 避坑指南</div>
+                            <div class="tips-box detail-content">1. 包口与墙板：门窗包口防潮耐晒。墙板选SPC石塑或竹木纤维，浅灰/米白最耐晒不褪色，卡扣安装无需美缝。
+2. 窗帘与吊顶：预留窗帘盒隐藏轨道，配幻影纱+遮光布。封阳台可做防水石膏板吊顶，未封用铝扣板。
+3. 落地窗布置：选Low-E隔热玻璃，内开窗侧留≥60cm检修通道，外侧空调机位做百叶窗通风。
+4. 晾衣架：推荐隐形嵌入式电动晾衣架，安装前确认吊顶承重，预埋加固龙骨。
+5. 防水地漏：地面做2%坡度，用T型防臭洗衣机专用地漏，闭水48h必查。
+6. 洗烘叠放：强烈建议买热泵式烘干机，比洗烘一体机效果好10倍。叠放需购买官方连接支架。
+7. 水电定位：洗衣机插座必须留在柜体侧板开孔处，绝对不能留在洗衣机正背后！
+8. 台面与盆：台面务必选石英石或岩板，洗手盆必须做台下盆工艺，搭配抽拉龙头。</div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="room-card" onclick="toggleProjects('厨房')">
+                <img src="images/room_4.png" alt="厨房">
+                <div class="card-body">
+                    <div class="room-name">厨房</div>
+                    <div class="room-budget">💰 预算：1.9万元</div>
+                </div>
+                <div class="project-list" id="projects-厨房">
+
+                    <div class="project-item" onclick="event.stopPropagation();toggleDetail('厨房-台下盆/热水器/止逆阀/隔音/美缝/橱柜尺寸/烟感/餐桌/冰箱')">
+                        <div class="project-name">📌 台下盆/热水器/止逆阀/隔音/美缝/橱柜尺寸/烟感/餐桌/冰箱</div>
+                        <div class="project-detail" id="detail-厨房-台下盆/热水器/止逆阀/隔音/美缝/橱柜尺寸/烟感/餐桌/冰箱">
+                            <div class="detail-label">📐 设计内容</div>
+                            <div class="detail-content">1. 布局：U型布局（洗-切-炒动线最短）。
+2. 高低台：洗切区高85-90cm（不弯腰），烹饪区低75-80cm（不架胳膊）。
+3. 挡水条：台面做前后挡水条（前挡防滴水，后挡防墙面渗水）。
+4. 洗菜盆：台下盆工艺，好打理无死角。
+5. 热水器：燃气热水器外置或百叶门隐藏。
+6. 止逆阀：高层必换不锈钢止逆阀。
+7. 橱柜尺寸：地柜深600高80-85cm，吊柜深300-350高700，间距600-700。</div>
+                            <div class="detail-label">🧱 材料与工艺</div>
+                            <div class="detail-content">1. 柜体：18mm多层实木防潮板（E0级）。
+2. 门板：PET肤感/双饰面（耐油污）。
+3. 台面：20mm厚石英石（硬度高、抗渗色）。
+4. 盆：304不锈钢手工盆（台下盆工艺）。
+5. 隔音：下水管包2cm橡塑棉+阻尼片。
+6. 美缝：环氧彩砂（耐油污防水）。
+7. 踢脚线：铝合金/PVC防水款。
+8. 五金：百隆/海蒂诗阻尼铰链+抽屉滑轨。</div>
+                            <div class="detail-label">🛋️ 家具/家电搭配</div>
+                            <div class="detail-content">1. 烟机：侧吸双腔烟机（风量≥23m³/风压≥400Pa）。
+2. 洗碗机：13套嵌入式。
+3. 净水：1000G净水器+垃圾处理器。
+4. 餐桌：岩板折叠/伸缩款（省空间）。
+5. 冰箱：嵌入式高柜（或放餐厅旁）。
+6. 其他：凉霸/空调。</div>
+                            <div class="detail-label">💰 预算：1.9万元</div>
+                            <div class="detail-label">⚠️ 避坑指南</div>
+                            <div class="tips-box detail-content">1. 洗菜盆：必做台下盆，304不锈钢手工盆，盆下贴铝箔防潮垫，边缘用防霉硅胶封边。
+2. 热水器与止逆阀：选强排式燃气热水器，外置或做百叶门隐藏散热。高层10层以上必须换不锈钢止逆阀。
+3. 隔音与美缝：下水管包2cm橡塑棉+阻尼片。美缝选环氧彩砂，踢脚线用铝合金/PVC防潮防蟑。
+4. 橱柜尺寸：地柜深600高80-85cm（高低台），吊柜深300-350高700，间距600-700。碗筷放地柜抽屉+拉篮。
+5. 烟感与餐厅：建议装独立光电烟感。开放式厨房选极简吊灯（距桌面70-80cm），餐桌选岩板折叠款。
+6. 高低台必做：高低台差值10cm最符合人体工学，防腰肌劳损。
+7. 插座布局：台面以上预留4-6个带开关五孔插座；水槽下预留3个；冰箱单独回路。
+8. 烟道止逆阀：开发商自带的塑料止逆阀必须换掉！换成不锈钢/硅胶防烟宝。</div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="room-card" onclick="toggleProjects('卫生间')">
+                <img src="images/room_5.png" alt="卫生间">
+                <div class="card-body">
+                    <div class="room-name">卫生间</div>
+                    <div class="room-budget">💰 预算：2.3万元</div>
+                </div>
+                <div class="project-list" id="projects-卫生间">
+
+                    <div class="project-item" onclick="event.stopPropagation();toggleDetail('卫生间-止逆阀/地漏/隔音/壁龛/防撞/美缝/干湿分离/热水器/浴室柜')">
+                        <div class="project-name">📌 止逆阀/地漏/隔音/壁龛/防撞/美缝/干湿分离/热水器/浴室柜</div>
+                        <div class="project-detail" id="detail-卫生间-止逆阀/地漏/隔音/壁龛/防撞/美缝/干湿分离/热水器/浴室柜">
+                            <div class="detail-label">📐 设计内容</div>
+                            <div class="detail-content">1. 干湿分离：客卫外置洗手台（彻底分离），主卫保留浴缸/淋浴房。
+2. 排水坡度：地面做2%-3%坡度，墙地通铺600x1200mm防滑砖。
+3. 止逆阀：风暖浴霸通风口必装止逆阀。
+4. 地漏：304不锈钢T型防臭芯。
+5. 隔音：下水管包隔音棉。
+6. 收纳：推荐壁龛，门后装防撞垫。
+7. 隔断：干湿分离用8mm钢化玻璃隔断。</div>
+                            <div class="detail-label">🧱 材料与工艺</div>
+                            <div class="detail-content">1. 防水：柔性防水涂料（墙面刷到1.8m，淋浴区2m，闭水48h）。
+2. 吊顶：铝扣板集成吊顶（防潮检修方便）。
+3. 美缝：环氧彩砂/聚脲（防水防霉）。
+4. 浴室柜：悬空式（多层实木/铝合金）+陶瓷一体盆。
+5. 热水器：扁桶双胆速热（若用电）。
+6. 隔音：2cm橡塑棉+阻尼片。</div>
+                            <div class="detail-label">🛋️ 家具/家电搭配</div>
+                            <div class="detail-content">1. 马桶：智能马桶（带座圈加热/自动翻盖）。
+2. 浴霸：风暖浴霸（装干区）。
+3. 其他：电热毛巾架、恒温花洒、镜柜灯带、排气扇。</div>
+                            <div class="detail-label">💰 预算：2.3万元</div>
+                            <div class="detail-label">⚠️ 避坑指南</div>
+                            <div class="tips-box detail-content">1. 止逆阀与地漏：风暖通风口必装止逆阀防异味。马桶角阀自带止逆功能。地漏选304不锈钢T型磁吸/硅胶芯。
+2. 隔音与壁龛：下水管包2cm橡塑棉+阻尼片。收纳推荐做壁龛（包管处/不占地/好清洁），免打孔置物架易掉。
+3. 防撞与美缝：门后装硅胶/磁吸防撞垫防磕墙。美缝选环氧彩砂或聚脲，施工前彻底清缝。
+4. 干湿分离：用8mm钢化玻璃+防爆膜做隔断（钻石型/一字型），安全防自爆。
+5. 热水器与浴室柜：若用电热水器选扁桶双胆速热，距地≥1.8m。浴室柜必做悬空式，陶瓷一体盆无缝好清洁。
+6. 防水是命脉：墙面防水必须刷到1.8m以上，门口做防水坝。闭水试验必须亲自去楼下看。
+7. 坡度与地漏：地面坡度必须≥2%，淋浴区做长条形隐形地漏或回字形切割。
+8. 等电位联结：卫生间等电位端子箱千万别砸掉或封死！它是防触电保命装置。</div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="room-card" onclick="toggleProjects('主卧')">
+                <img src="images/room_6.png" alt="主卧">
+                <div class="card-body">
+                    <div class="room-name">主卧</div>
+                    <div class="room-budget">💰 预算：1.6万元</div>
+                </div>
+                <div class="project-list" id="projects-主卧">
+
+                    <div class="project-item" onclick="event.stopPropagation();toggleDetail('主卧-吊顶/灯光/床后半墙/床与床垫/飘窗/窗帘/床对卫/电脑梳妆台/入口柜/衣柜位置')">
+                        <div class="project-name">📌 吊顶/灯光/床后半墙/床与床垫/飘窗/窗帘/床对卫/电脑梳妆台/入口柜/衣柜位置</div>
+                        <div class="project-detail" id="detail-主卧-吊顶/灯光/床后半墙/床与床垫/飘窗/窗帘/床对卫/电脑梳妆台/入口柜/衣柜位置">
+                            <div class="detail-label">📐 设计内容</div>
+                            <div class="detail-content">1. 吊顶：局部边吊或双眼皮吊顶（不压层高）。
+2. 灯光：床头壁灯/隐藏灯带+防眩射灯，营造助眠氛围。
+3. 床后半墙：可选木饰面/硬包（奶咖/浅灰）。
+4. 床与床垫：买成品悬浮床/软包床，独立袋装弹簧+乳胶床垫。
+5. 飘窗：铺软垫做休闲区，窗台石用石英石/人造岗石。
+6. 衣柜：一门到顶，内部按'挂衣区70%+叠放区20%+抽屉10%'规划。
+7. 床头：两侧预留双控开关+USB/Type-C插座。</div>
+                            <div class="detail-label">🧱 材料与工艺</div>
+                            <div class="detail-content">1. 墙板：实木多层板贴皮或PU硬包（奶咖/浅灰）。
+2. 窗台石：石英石/人造岗石，包口用实木/铝合金。
+3. 窗帘：高精密遮光布（≥90%）+幻影纱。
+4. 地板：实木多层复合（脚感好、环保）。
+5. 衣柜：ENF级欧松板+PET门板。</div>
+                            <div class="detail-label">🛋️ 家具/家电搭配</div>
+                            <div class="detail-content">1. 床：1.8m悬浮床/软包床。
+2. 床垫：独立袋装弹簧+乳胶。
+3. 空调：1.5匹一级能效变频挂机。
+4. 智能：智能窗帘电机、床头阅读壁灯。
+5. 台面：悬浮长桌（梳妆/办公二合一）。
+6. 收纳：斗柜。</div>
+                            <div class="detail-label">💰 预算：1.6万元</div>
+                            <div class="detail-label">⚠️ 避坑指南</div>
+                            <div class="tips-box detail-content">1. 吊顶与灯光：做局部边吊或双眼皮吊顶不压层高。灯光用床头壁灯/隐藏灯带+防眩射灯。
+2. 床与半墙：推荐买成品悬浮床/软包床，床垫选独立袋装弹簧+乳胶。床后半墙可选木饰面/PU硬包。
+3. 飘窗与窗帘：窗台石用石英石/人造岗石，包口用实木/铝合金。窗帘选高精密遮光布+幻影纱。
+4. 床对主卫：加L型衣柜隔断或屏风，或主卫门改隐形门/长虹玻璃门化解风水。
+5. 梳妆/电脑台与衣柜：靠窗或床侧做1.2m悬浮长桌，兼顾梳妆办公。入口做开放式挂衣区。衣柜放床侧面最合理。
+6. 衣柜深度：标准深度600mm，若做推拉门需加深至650mm。
+7. 床头插座：高度距地70cm，务必带USB/Type-C快充口。双控开关或智能开关必做。
+8. 隔音处理：临街卧室窗户选断桥铝+双层中空夹胶玻璃。</div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="room-card" onclick="toggleProjects('走廊')">
+                <img src="images/room_7.png" alt="走廊">
+                <div class="card-body">
+                    <div class="room-name">走廊</div>
+                    <div class="room-budget">💰 预算：0.3万元</div>
+                </div>
+                <div class="project-list" id="projects-走廊">
+
+                    <div class="project-item" onclick="event.stopPropagation();toggleDetail('走廊-吊顶/灯光/端景装饰')">
+                        <div class="project-name">📌 吊顶/灯光/端景装饰</div>
+                        <div class="project-detail" id="detail-走廊-吊顶/灯光/端景装饰">
+                            <div class="detail-label">📐 设计内容</div>
+                            <div class="detail-content">1. 吊顶：防水石膏板或铝扣板（近厨卫用铝扣板防潮）。
+2. 灯光：防眩射灯洗墙+感应灯带基础照明。
+3. 端景：尽头做端景墙（挂画/壁龛/艺术装置/绿植）。
+4. 感应灯：墙面离地30cm装人体感应地脚灯。</div>
+                            <div class="detail-label">🧱 材料与工艺</div>
+                            <div class="detail-content">1. 吊顶：轻钢龙骨+防裂石膏板。
+2. 灯光：36°窄光束角射灯聚焦端景。
+3. 墙面：耐擦洗乳胶漆或局部护墙板。
+4. 踢脚线：与全屋统一（40mm极简铝合金）。</div>
+                            <div class="detail-label">🛋️ 家具/家电搭配</div>
+                            <div class="detail-content">1. 装饰：端景装饰画/小型绿植/艺术摆件。
+2. 照明：感应夜灯。</div>
+                            <div class="detail-label">💰 预算：0.3万元</div>
+                            <div class="detail-label">⚠️ 避坑指南</div>
+                            <div class="tips-box detail-content">1. 吊顶与灯光：近厨卫用铝扣板防潮，其他区域用防水石膏板。灯光选防眩射灯洗墙+感应灯带。
+2. 端景装饰：走廊尽头必做端景墙，配36°窄光束角射灯聚焦，提升空间纵深感与艺术氛围。
+3. 感应灯：墙面离地30cm装人体感应地脚灯，起夜不摸黑，不刺眼。
+4. 墙面处理：走廊易磕碰，墙面建议用耐擦洗乳胶漆或局部护墙板。</div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="room-card" onclick="toggleProjects('儿童房')">
+                <img src="images/room_8.png" alt="儿童房">
+                <div class="card-body">
+                    <div class="room-name">儿童房</div>
+                    <div class="room-budget">💰 预算：1.2万元</div>
+                </div>
+                <div class="project-list" id="projects-儿童房">
+
+                    <div class="project-item" onclick="event.stopPropagation();toggleDetail('儿童房-灵活布局+环保优先+成长性')">
+                        <div class="project-name">📌 灵活布局+环保优先+成长性</div>
+                        <div class="project-detail" id="detail-儿童房-灵活布局+环保优先+成长性">
+                            <div class="detail-label">📐 设计内容</div>
+                            <div class="detail-content">1. 布局：榻榻米+书桌+衣柜一体化（小户型神器）。
+2. 色彩：低饱和度莫兰迪色为主，避免高饱和刺激视觉。
+3. 预留：成长空间，家具选可调节/可移动款式。
+4. 墙面：留白，方便孩子长大后更换风格。</div>
+                            <div class="detail-label">🧱 材料与工艺</div>
+                            <div class="detail-content">1. 榻榻米：多层实木防潮板+透气孔。
+2. 书桌：人体工学升降桌（适应孩子身高变化）。
+3. 墙面：儿童漆/硅藻泥（耐擦洗、吸附甲醛）。</div>
+                            <div class="detail-label">🛋️ 家具/家电搭配</div>
+                            <div class="detail-content">1. 床：1.5m儿童床（带护栏）。
+2. 床垫：护脊床垫。
+3. 学习：学习桌椅（可调节高度）、护眼台灯。
+4. 空调：1匹变频空调。
+5. 收纳：收纳玩具柜。</div>
+                            <div class="detail-label">💰 预算：1.2万元</div>
+                            <div class="detail-label">⚠️ 避坑指南</div>
+                            <div class="tips-box detail-content">1. 榻榻米防潮：南方潮湿地区慎做全封闭榻榻米！底部必须留透气孔，侧板用防潮板。
+2. 儿童房色彩：避免大面积红/黄/蓝等高饱和色。推荐奶白+浅灰+原木+局部低饱和点缀。
+3. 家具圆角处理：所有家具边角必须做倒圆角或加装防撞条，防止磕碰。
+4. 学习区照明：书桌上方预留护眼主灯+桌面台灯双光源，照度≥500lux。
+5. 成长性预留：儿童房不要做固定死布局！家具选可调节/可移动款式。</div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="room-card" onclick="toggleProjects('书房')">
+                <img src="images/room_9.png" alt="书房">
+                <div class="card-body">
+                    <div class="room-name">书房</div>
+                    <div class="room-budget">💰 预算：1.0万元</div>
+                </div>
+                <div class="project-list" id="projects-书房">
+
+                    <div class="project-item" onclick="event.stopPropagation();toggleDetail('书房-多功能布局+隔音+网络布线')">
+                        <div class="project-name">📌 多功能布局+隔音+网络布线</div>
+                        <div class="project-detail" id="detail-书房-多功能布局+隔音+网络布线">
+                            <div class="detail-label">📐 设计内容</div>
+                            <div class="detail-content">1. 书桌：靠窗定制悬浮书桌+开放式书架。
+2. 备用：墙面预留折叠沙发床（平时书房，客来客房）。
+3. 隔音：临街墙面做轻钢龙骨隔音层。
+4. 网络：六类网线（Cat6）预埋双口面板。</div>
+                            <div class="detail-label">🧱 材料与工艺</div>
+                            <div class="detail-content">1. 书桌：25mm厚多层实木板（防下沉）。
+2. 墙面：浅灰乳胶漆+局部胡桃木开放格。
+3. 地面：与客厅通铺柔光砖或铺木地板。
+4. 网络：Cat6六类网线预埋双口面板。</div>
+                            <div class="detail-label">🛋️ 家具/家电搭配</div>
+                            <div class="detail-content">1. 办公：人体工学椅、电动升降书桌。
+2. 备用：1.5m折叠沙发床。
+3. 空调：1匹一级能效变频空调。
+4. 网络：千兆WiFi6 AP面板。
+5. 窗帘：香格里拉帘。</div>
+                            <div class="detail-label">💰 预算：1.0万元</div>
+                            <div class="detail-label">⚠️ 避坑指南</div>
+                            <div class="tips-box detail-content">1. 网络核心区：书房必须预埋Cat6六类网线，预留双网口，WiFi6 AP面板装在书桌上方。
+2. 书桌防sagging：跨度超1.2m的书桌，中间必须加隐形支撑或选25mm厚板材。
+3. 插座矩阵：桌面以上留4个，桌面下留2个，全部带独立开关。
+4. 隔音降噪：临街墙面做'轻钢龙骨+50mm隔音棉+双层石膏板'，降噪30dB。
+5. 窗帘选择：书房推荐香格里拉帘/百叶帘，光线可精准调节。</div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<footer>
+    Generated by <a href="https://www.aipyaipy.com" target="_blank">AiPy</a> | 本地数据处理，不上传任何信息 | AiPy 章鱼哥设计团队 © 2026
+</footer>
+<script>
+function toggleProjects(room) {
+    var el = document.getElementById('projects-' + room);
+    el.classList.toggle('show');
+}
+function toggleDetail(id) {
+    var el = document.getElementById('detail-' + id);
+    if (el) el.classList.toggle('show');
+}
+var chartDom = document.getElementById('budgetChart');
+var myChart = echarts.init(chartDom);
+var option = {
+    tooltip: { trigger: 'item', formatter: '{b}: {c}万元 ({d}%)' },
+    legend: { top: '5%', left: 'center', textStyle: { fontFamily: 'Noto Sans SC' } },
+    series: [{
+        name: '预算分布',
+        type: 'pie',
+        radius: ['40%', '70%'],
+        avoidLabelOverlap: false,
+        itemStyle: { borderRadius: 10, borderColor: '#fff', borderWidth: 2 },
+        label: { show: false },
+        emphasis: { label: { show: true, fontSize: 20, fontWeight: 'bold' } },
+        labelLine: { show: false },
+        data: [
+            { value: 0.7, name: '玄关' },
+            { value: 2.6, name: '客厅' },
+            { value: 1.6, name: '阳台' },
+            { value: 1.9, name: '厨房' },
+            { value: 2.3, name: '卫生间' },
+            { value: 1.6, name: '主卧' },
+            { value: 0.3, name: '走廊' },
+            { value: 1.2, name: '儿童房' },
+            { value: 1.0, name: '书房' },
+        ]
+    }]
+};
+myChart.setOption(option);
+window.addEventListener('resize', function() { myChart.resize(); });
+</script>
+</body>
+</html>
